@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- the theme applied to the application or activity -->
+    <style name="PonkanTheme"
+           parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/PonkanActionBar</item>
+    </style>
+
+    <!-- ActionBar styles -->
+    <style name="PonkanActionBar"
+           parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">#F5AA00</item>
+    </style>
+</resources>
