@@ -1,45 +1,37 @@
 package com.ponkanlab.ponkangithubclient;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.os.AsyncTask;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ListView;
 
 import com.ponkanlab.ponkangithubclient.io.GithubConnector;
 
 
-public class MainActivity extends Activity {
+public class GistsActivity extends Activity {
 
-    private Button runButton;
+    private ListView gistListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_gists);
+        gistListView = (ListView) findViewById(R.id.gistListView);
 
-        runButton = (Button) findViewById(R.id.runButton);
-        runButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, GistsActivity.class);
-                startActivity(intent);
-
-
-            }
-        });
     }
 
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        new GithubConnector(this, gistListView).execute("oi");
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_gists, menu);
         return true;
     }
 
@@ -53,10 +45,7 @@ public class MainActivity extends Activity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        } else if (id == R.id.action_search) {
-            Log.d("teste", "action_search!");
         }
-
 
         return super.onOptionsItemSelected(item);
     }
