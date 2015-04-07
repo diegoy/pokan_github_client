@@ -29,12 +29,9 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, GistsActivity.class);
                 startActivity(intent);
-
-
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -56,7 +53,6 @@ public class MainActivity extends Activity {
         } else if (id == R.id.action_search) {
             Log.d("teste", "action_search!");
         }
-
 
         return super.onOptionsItemSelected(item);
     }

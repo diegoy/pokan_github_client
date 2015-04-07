@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.ponkanlab.ponkangithubclient.model.GistItem;
 import com.squareup.okhttp.Headers;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -19,7 +20,7 @@ import java.util.List;
 /**
  * Created by diegoy on 01/04/15.
  */
-public class GithubConnector extends AsyncTask<String, Integer, List<String>> {
+public class GithubConnector extends AsyncTask<String, Integer, List<GistItem>> {
 
     private final OkHttpClient client = new OkHttpClient();
 
@@ -31,7 +32,7 @@ public class GithubConnector extends AsyncTask<String, Integer, List<String>> {
         this.gistListView = gistListView;
     }
 
-    private List<String> run() throws Exception {
+    private List<GistItem> run() throws Exception {
         Request request = new Request.Builder()
                 .url("https://api.github.com/users/diegoy/gists")
                 .build();
@@ -44,14 +45,14 @@ public class GithubConnector extends AsyncTask<String, Integer, List<String>> {
             Log.d("githubClient", responseHeaders.name(i) + ": " + responseHeaders.value(i));
         }
 
-        List<String> result = new ArrayList();
-        result.add(response.body().string());
+        String body = response.body().string();
+        List<GistItem> result = GistItem.buildList(body);;
 
         return result ;
     }
 
     @Override
-    protected List<String> doInBackground(String... params) {
+    protected List<GistItem> doInBackground(String... params) {
         try {
             return run();
         } catch (Exception e) {
@@ -61,9 +62,9 @@ public class GithubConnector extends AsyncTask<String, Integer, List<String>> {
     }
 
     @Override
-    protected void onPostExecute(List<String> result) {
+    protected void onPostExecute(List<GistItem> result) {
         Log.d("githubClient", result.toString());
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(context,
+        ArrayAdapter<GistItem> arrayAdapter = new ArrayAdapter<GistItem>(context,
                 android.R.layout.simple_list_item_1,
                 result);
 
