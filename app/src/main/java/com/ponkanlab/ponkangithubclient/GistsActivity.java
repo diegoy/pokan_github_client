@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.ponkanlab.ponkangithubclient.io.GithubConnector;
 
@@ -13,19 +14,22 @@ import com.ponkanlab.ponkangithubclient.io.GithubConnector;
 public class GistsActivity extends Activity {
 
     private ListView gistListView;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gists);
         gistListView = (ListView) findViewById(R.id.gistListView);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
 
     }
 
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        new GithubConnector(this, gistListView).execute("oi");
+        new GithubConnector(this, gistListView, progressBar).execute("oi");
     }
 
     @Override

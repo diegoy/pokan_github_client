@@ -3,8 +3,10 @@ package com.ponkanlab.ponkangithubclient.io;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.ponkanlab.ponkangithubclient.model.GistItem;
 import com.squareup.okhttp.Headers;
@@ -25,11 +27,13 @@ public class GithubConnector extends AsyncTask<String, Integer, List<GistItem>> 
     private final OkHttpClient client = new OkHttpClient();
 
     private final ListView gistListView;
+    private final ProgressBar progressBar;
     private final Context context;
 
-    public GithubConnector(Context context, ListView gistListView) {
+    public GithubConnector(Context context, ListView gistListView, ProgressBar progressBar) {
         this.context = context;
         this.gistListView = gistListView;
+        this.progressBar = progressBar;
     }
 
     private List<GistItem> run() throws Exception {
@@ -69,5 +73,6 @@ public class GithubConnector extends AsyncTask<String, Integer, List<GistItem>> 
                 result);
 
         gistListView.setAdapter(arrayAdapter);
+        progressBar.setVisibility(View.GONE);
     }
 }
