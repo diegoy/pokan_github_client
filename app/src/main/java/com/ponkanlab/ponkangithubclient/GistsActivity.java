@@ -1,14 +1,13 @@
 package com.ponkanlab.ponkangithubclient;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
-import com.ponkanlab.ponkangithubclient.io.GithubConnector;
+import com.ponkanlab.ponkangithubclient.io.ListGists;
 
 
 public class GistsActivity extends Activity {
@@ -29,7 +28,7 @@ public class GistsActivity extends Activity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        new GithubConnector(this, gistListView, progressBar).execute("oi");
+        new ListGists(this, gistListView, progressBar).execute("diegoy");
     }
 
     @Override

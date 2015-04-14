@@ -1,12 +1,6 @@
 package com.ponkanlab.ponkangithubclient.io;
 
-import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.ProgressBar;
 
 import com.ponkanlab.ponkangithubclient.model.GistItem;
 import com.squareup.okhttp.Headers;
@@ -15,30 +9,18 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by diegoy on 01/04/15.
  */
-public class GithubConnector extends AsyncTask<String, Integer, List<GistItem>> {
+public class GithubConnector {
 
     private final OkHttpClient client = new OkHttpClient();
 
-    private final ListView gistListView;
-    private final ProgressBar progressBar;
-    private final Context context;
-
-    public GithubConnector(Context context, ListView gistListView, ProgressBar progressBar) {
-        this.context = context;
-        this.gistListView = gistListView;
-        this.progressBar = progressBar;
-    }
-
-    private List<GistItem> run() throws Exception {
+    public List<GistItem> doGet(String path) throws Exception {
         Request request = new Request.Builder()
-                .url("https://api.github.com/users/diegoy/gists")
+                .url("https://api.github.com/users/" + path)
                 .build();
 
         Response response = client.newCall(request).execute();
@@ -53,26 +35,5 @@ public class GithubConnector extends AsyncTask<String, Integer, List<GistItem>> 
         List<GistItem> result = GistItem.buildList(body);;
 
         return result ;
-    }
-
-    @Override
-    protected List<GistItem> doInBackground(String... params) {
-        try {
-            return run();
-        } catch (Exception e) {
-            Log.e("githubClient", "ihh", e);
-        }
-        return Collections.EMPTY_LIST;
-    }
-
-    @Override
-    protected void onPostExecute(List<GistItem> result) {
-        Log.d("githubClient", result.toString());
-        ArrayAdapter<GistItem> arrayAdapter = new ArrayAdapter<GistItem>(context,
-                android.R.layout.simple_list_item_1,
-                result);
-
-        gistListView.setAdapter(arrayAdapter);
-        progressBar.setVisibility(View.GONE);
     }
 }
