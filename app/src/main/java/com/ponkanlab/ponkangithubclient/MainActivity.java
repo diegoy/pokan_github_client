@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ponkanlab.ponkangithubclient.io.GithubConnector;
@@ -17,17 +18,21 @@ import com.ponkanlab.ponkangithubclient.io.GithubConnector;
 public class MainActivity extends Activity {
 
     private Button runButton;
+    private EditText userNameField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        userNameField = (EditText) findViewById(R.id.userNameField);
+
         runButton = (Button) findViewById(R.id.runButton);
         runButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, GistsActivity.class);
+                intent.putExtra("user", userNameField.getText().toString());
                 startActivity(intent);
             }
         });

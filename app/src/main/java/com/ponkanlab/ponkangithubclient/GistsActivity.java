@@ -1,6 +1,7 @@
 package com.ponkanlab.ponkangithubclient;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,7 +29,9 @@ public class GistsActivity extends Activity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        new ListGists(this, gistListView, progressBar).execute("diegoy");
+        Intent intent = getIntent();
+        String user = intent.getStringExtra("user");
+        new ListGists(this, gistListView, progressBar).execute(user);
     }
 
     @Override
